@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mist-strands"
+version = "0.1.0"
+description = "Mist for AWS Strands Agents: a session manager on Mist, the Mist skills and the mist-mcp server."
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirectory=sdk",
+    "strands-agents>=1.30",
+    "mcp>=1.0",
+]
+
+[project.optional-dependencies]
+openai = ["strands-agents[openai]>=1.30"]
+dev = ["pytest", "moto[s3]>=5"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["mist_strands"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -13,6 +13,8 @@ TARGETS=(
   plugins/codex/skills
   plugins/hermes/skills
   plugins/opencode/skills
+  adapters/langchain/mist_langchain/skills
+  adapters/strands/mist_strands/skills
 )
 
 # OpenCode loads skills from a URL that serves index.json (https://opencode.ai/docs/skills/).

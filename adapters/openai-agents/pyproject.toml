@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mist-openai-agents"
+version = "0.1.0"
+description = "Mist for the OpenAI Agents SDK: a session on Mist and the mist-mcp server."
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirectory=sdk",
+    "openai-agents>=0.24",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "moto[s3]>=5"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["mist_openai_agents"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
