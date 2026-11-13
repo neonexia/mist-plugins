@@ -6,7 +6,7 @@ license: Apache-2.0
 
 # Change events
 
-A subscription watches a bucket folder you can read. Every put and delete there becomes an event in your feed:
+A subscription watches a bucket folder you can read. Every write and delete there becomes an event in your feed:
 bucket, key, action, size, etag, who did it, and a cursor. Events are metadata; read the object over S3.
 
 Use it instead of polling `list-objects` in a loop.
@@ -27,7 +27,7 @@ print(sub["id"])
 ```
 
 - Give a `name`: creating again with the same name returns the same subscription, so restarts are safe.
-- Optional: `suffix=".json"` (only matching keys), `actions=["put"]` or `["delete"]`, `include_self=true` (your own
+- Optional: `suffix=".json"` (only matching keys), `actions=["written"]` or `["deleted"]`, `include_self=true` (your own
   changes are skipped by default).
 - You need read access to the whole folder (`403 not_readable` otherwise).
 - Creating or deleting a subscription can take up to about 90 seconds. Wait for it.
@@ -52,11 +52,19 @@ acknowledged, so after a restart you see again what you had not finished. `after
 ## Read the feed (Python)
 
 ```python
+import os, mist
+
+m = mist.Client(ca_bundle=os.environ.get("MIST_CA_BUNDLE"))
+sub = m.events.subscribe("my-bucket", "inbox/", name="inbox-watch")
+s3 = m.s3()
 for ev in m.events.stream(sub["id"], on_expired="oldest"):
     if isinstance(ev, mist.Gap):           # the cursor aged out; re-list the folder to catch up
         continue
-    body = m.s3().get_object(Bucket=ev["bucket"], Key=ev["key"])["Body"].read() if ev["action"] == "put" else None
-    handle(ev, body)
+    if ev["action"] == "written":
+        body = s3.get_object(Bucket=ev["bucket"], Key=ev["key"])["Body"].read()
+        print("new", ev["key"], len(body), "bytes")
+    else:
+        print("deleted", ev["key"])
 ```
 
 `stream()` long-polls in a loop, reconnects, acknowledges a batch only when you ask for the next event after it, and
@@ -65,7 +73,7 @@ skips ids it saw recently. One batch: `events, cursor = m.events.wait(sub["id"],
 ## An event
 
 ```json
-{"id": "...", "type": "object", "action": "put", "time": "2026-11-13T10:00:00Z",
+{"id": "...", "type": "object", "action": "written", "time": "2026-11-13T10:00:00Z",
  "bucket": "my-bucket", "key": "inbox/job-1.json",
  "object": {"size": 120, "etag": "...", "sequencer": "..."},
  "actor": {"iss": "https://idp.example.com", "id": "agent-7"},

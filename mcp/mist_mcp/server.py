@@ -10,6 +10,7 @@ Configuration comes from the environment, as for every Mist pack:
 from __future__ import annotations
 
 import json
+import logging
 import os
 import threading
 from pathlib import Path
@@ -116,7 +117,9 @@ class Config:
                         session_name="mist-mcp",
                         http_client=self._http,
                     )
-                except (ValueError, OSError) as e:
+                except OSError as e:
+                    raise _not_configured(f"cannot read MIST_CA_BUNDLE {self.ca_bundle}: {e.strerror}") from None
+                except ValueError as e:
                     raise _not_configured(str(e)) from None
             return self._clients[role]
 
@@ -320,7 +323,7 @@ def build_server(config: Optional[Config] = None) -> MCPServer:
         ] = None,
         suffix: Annotated[Optional[str], Field(description="Only keys ending with this.")] = None,
         actions: Annotated[
-            Optional[List[Literal["put", "delete"]]], Field(description="Which changes; omit for both.")
+            Optional[List[Literal["written", "deleted"]]], Field(description="Which changes; omit for both.")
         ] = None,
         include_self: Annotated[Optional[bool], Field(description="Also your own changes (default false).")] = None,
     ) -> dict:
@@ -452,6 +455,7 @@ def plain_schema(node: Any) -> Any:
 
 
 def main() -> None:
+    logging.getLogger("httpx").setLevel(logging.WARNING)  # one INFO line per request is noise in harness logs
     build_server().run("stdio")
 
 

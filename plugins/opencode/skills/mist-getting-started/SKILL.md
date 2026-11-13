@@ -52,6 +52,9 @@ no access at all cannot mint S3 credentials (`AccessDenied` from STS).
 
 MCP: `create_bucket` with `name`. Python: `m.buckets.create("my-agent-data")`.
 
+- Creating buckets needs a create permission from the cluster's admin, usually for a name pattern (for example
+  `team-*`). `403` with rule `create_not_permitted` means exactly that: you have none for this name. Use a name that
+  matches your permission, or ask the user for one, or work in a bucket someone has granted you.
 - Names are global in the cluster: 3-63 characters, lowercase letters, digits, `-`. Pick something specific
   (`<agent>-<purpose>`). `409 BucketExists` means the name is taken: choose another.
 - New buckets start with a whole-bucket expiry rule (30 days by default on a stock cluster): objects are deleted that
