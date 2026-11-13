@@ -1,0 +1,17 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "mist": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/neonexia/mist-plugins#subdirectory=mcp", "mist-mcp"],
+      "env": {
+        "MIST_ENDPOINT": "${MIST_ENDPOINT}",
+        "MIST_S3_ENDPOINT": "${MIST_S3_ENDPOINT}",
+        "MIST_IDENTITY_TOKEN_FILE": "${MIST_IDENTITY_TOKEN_FILE}",
+        "MIST_PRINCIPAL_KEY_ID": "${MIST_PRINCIPAL_KEY_ID}",
+        "MIST_PRINCIPAL_KEY_SECRET": "${MIST_PRINCIPAL_KEY_SECRET}",
+        "MIST_CA_BUNDLE": "${MIST_CA_BUNDLE}"
+      }
+    }
+  }
+}

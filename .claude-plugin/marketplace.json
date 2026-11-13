@@ -1,0 +1,13 @@
+{
+  "name": "mist-plugins",
+  "owner": {"name": "neonexia"},
+  "metadata": {"description": "Plugins that let AI agents use Mist, the S3-compatible object store for agents."},
+  "plugins": [
+    {
+      "name": "mist",
+      "source": "./plugins/claude",
+      "description": "The Mist MCP server and skills: identity, S3 credentials, run workspaces, grants and roles, change events.",
+      "category": "storage"
+    }
+  ]
+}

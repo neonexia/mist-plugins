@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "mist": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/neonexia/mist-plugins#subdirectory=mcp", "mist-mcp"],
+      "env_vars": [
+        "MIST_ENDPOINT",
+        "MIST_S3_ENDPOINT",
+        "MIST_IDENTITY_TOKEN_FILE",
+        "MIST_PRINCIPAL_KEY_ID",
+        "MIST_PRINCIPAL_KEY_SECRET",
+        "MIST_CA_BUNDLE",
+        "AWS_WEB_IDENTITY_TOKEN_FILE"
+      ],
+      "startup_timeout_sec": 120,
+      "tool_timeout_sec": 150
+    }
+  }
+}

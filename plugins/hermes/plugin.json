@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mist",
+  "version": "0.1.0",
+  "description": "Mist, the S3-compatible object store for agents: the Mist MCP server (control plane) and skills for identity, credentials, workspaces, sharing, change events and errors."
+}

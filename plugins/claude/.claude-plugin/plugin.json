@@ -1,0 +1,10 @@
+{
+  "name": "mist",
+  "version": "0.1.0",
+  "description": "Mist, the S3-compatible object store for agents: the Mist MCP server (control plane) and skills for identity, credentials, workspaces, sharing, change events and errors.",
+  "author": {"name": "neonexia"},
+  "homepage": "https://github.com/neonexia/mist-plugins",
+  "repository": "https://github.com/neonexia/mist-plugins",
+  "license": "Apache-2.0",
+  "keywords": ["mist", "s3", "storage", "object-store", "mcp"]
+}

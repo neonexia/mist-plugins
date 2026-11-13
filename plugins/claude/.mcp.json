@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mist": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/neonexia/mist-plugins#subdirectory=mcp", "mist-mcp"]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "mist": {
+        "type": "local",
+        "command": ["uvx", "--from", "git+https://github.com/neonexia/mist-plugins#subdirectory=mcp", "mist-mcp"],
+        "timeout": {"startup": 120000, "execution": 150000}
+      }
+    }
+  },
+  "skills": ["https://raw.githubusercontent.com/neonexia/mist-plugins/main/plugins/opencode/skills/"]
+}
