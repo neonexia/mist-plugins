@@ -136,7 +136,7 @@ class Workspaces:
         return self._api.call("list_workspaces")  # type: ignore[return-value]
 
     def delete(self, bucket: str, run_id: str) -> models.Deleted:
-        """Ends the workspace early: its grant and record go; its objects stay until the TTL rule removes them."""
+        """Ends the workspace early: its grant goes at once; a background job then deletes its objects and its record."""
         return self._api.call("delete_workspace", path={"bucket": bucket, "run_id": run_id})  # type: ignore[return-value]
 
 

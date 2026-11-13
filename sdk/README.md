@@ -118,7 +118,7 @@ optional grant that ends with it. Repeating the call with the same `run_id` retu
 ws = m.workspaces.create("results", ttl_days=7, run_id="nightly-42",
                          grantee={"principal": {"issuer": "https://idp.example.com", "id": "agent-7"}})
 ws["prefix"]                                      # "workspaces/7d/nightly-42/"
-m.workspaces.delete("results", "nightly-42")      # ends access; objects go with the TTL rule
+m.workspaces.delete("results", "nightly-42")      # ends access now; its files are deleted in the background
 ```
 
 Replies are plain dicts (typed with `TypedDict`). Errors are `mist.MistError` with `status`, `error`, `message`,

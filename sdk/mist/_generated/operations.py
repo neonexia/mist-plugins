@@ -15,7 +15,7 @@ class Operation:
     statuses: Tuple[int, ...]
 
 
-SPEC_SHA256 = "e804a5bc2871616dfbe9a1d65ca7219812e166369990ed0a490f4ae4a85841db"
+SPEC_SHA256 = "49eb9aedf066ac69abc5342feb5bd07b1a2227e3b05dc2f81f61d99c94bd4838"
 
 OPERATIONS: Dict[str, Operation] = {
     "create_bucket": Operation(

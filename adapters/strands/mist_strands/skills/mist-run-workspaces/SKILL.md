@@ -73,8 +73,8 @@ nowhere else in your bucket. Default actions are read, write and delete. The gra
 ## List and end
 
 - `list_workspaces` lists the workspaces in every bucket you own.
-- To end one early, delete its objects over S3. Ending the record and grant early is in the SDK:
-  `m.workspaces.delete(bucket, run_id)` (objects then go with the TTL rule).
+- To end one early, use the SDK: `m.workspaces.delete(bucket, run_id)`. Access ends at once; Mist then deletes
+  the workspace's objects and its record in the background. The run id stays taken until that finishes.
 
 ## Good habits
 

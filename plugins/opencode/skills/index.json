@@ -1,10 +1,10 @@
 {
   "skills": [
-    {"name": "mist-change-events", "version": "233abc80c8d1", "files": ["SKILL.md"]},
-    {"name": "mist-choosing-a-surface", "version": "233abc80c8d1", "files": ["SKILL.md"]},
-    {"name": "mist-getting-started", "version": "233abc80c8d1", "files": ["SKILL.md"]},
-    {"name": "mist-limits-and-errors", "version": "233abc80c8d1", "files": ["SKILL.md"]},
-    {"name": "mist-run-workspaces", "version": "233abc80c8d1", "files": ["SKILL.md"]},
-    {"name": "mist-sharing-with-grants-and-roles", "version": "233abc80c8d1", "files": ["SKILL.md"]}
+    {"name": "mist-change-events", "version": "df3be9931cfa", "files": ["SKILL.md"]},
+    {"name": "mist-choosing-a-surface", "version": "df3be9931cfa", "files": ["SKILL.md"]},
+    {"name": "mist-getting-started", "version": "df3be9931cfa", "files": ["SKILL.md"]},
+    {"name": "mist-limits-and-errors", "version": "df3be9931cfa", "files": ["SKILL.md"]},
+    {"name": "mist-run-workspaces", "version": "df3be9931cfa", "files": ["SKILL.md"]},
+    {"name": "mist-sharing-with-grants-and-roles", "version": "df3be9931cfa", "files": ["SKILL.md"]}
   ]
 }
