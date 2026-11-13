@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mist-mcp"
+version = "0.1.0"
+description = "The Mist MCP server: Mist's control plane as tools, over stdio, with the agent's own identity."
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=2.3,<3",
+    "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirectory=sdk",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "anyio"]
+
+[project.scripts]
+mist-mcp = "mist_mcp.server:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["mist_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
