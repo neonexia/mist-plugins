@@ -51,7 +51,7 @@ raises botocore `ClientError` for them.
 | S3 code | Means | Do |
 |---|---|---|
 | `AccessDenied` | No right for this key, or keys minted before a new grant | `whoami` to see rights; call `credentials` again; stay inside granted prefixes |
-| `ExpiredToken` | Keys older than 15 minutes | Mint again (`credentials`); the SDK does it for you |
+| `ExpiredToken` | Keys past their expiry (1 hour by default) | Mint again (`credentials`); the SDK does it for you |
 | `NoSuchKey` | The object is gone (maybe expired by a TTL rule) | Expected with expiry and events; handle it |
 | `PreconditionFailed` (412) | A conditional write (`If-None-Match: *`, `If-Match`) lost | Someone else wrote first: re-read and decide |
 | `InvalidRequest` "Bucket quota exceeded" (400) | The bucket is full | Delete data, or ask the owner to raise the quota |
@@ -62,7 +62,7 @@ raises botocore `ClientError` for them.
 
 | Thing | Value |
 |---|---|
-| S3 credentials | 15 minutes; refresh before expiry. Presigned URLs live at most 15 minutes |
+| S3 credentials | 1 hour by default (`sts.session_secs`); refresh before expiry. A presigned URL lives at most as long as its keys |
 | New bucket expiry | A whole-bucket rule, 30 days by default (cluster setting), up to the cluster maximum (365 by default) |
 | Workspace TTL | 1 day up to the shortest expiry rule covering the folder |
 | Bucket names | 3-63 characters, lowercase, digits, `-`; unique in the cluster |

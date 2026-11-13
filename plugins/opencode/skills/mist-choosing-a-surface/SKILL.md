@@ -104,6 +104,6 @@ trust less.
 ## Facts that hold on every surface
 
 - Region `us-east-1`, path-style addressing.
-- Credentials last 15 minutes; presigned URLs therefore work at most 15 minutes.
+- Credentials last 1 hour by default; a presigned URL works at most as long as the keys that signed it.
 - Agents cannot create buckets over S3 (`CreateBucket` is denied): use `create_bucket`.
 - Bucket policies (`PutBucketPolicy`) are denied: share with grants and roles.

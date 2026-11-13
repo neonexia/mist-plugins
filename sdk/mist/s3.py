@@ -4,7 +4,7 @@ Two public botocore hooks, both on the botocore session so every S3 client built
 
 - a `credential_provider` component whose credentials read `Provider.get()` on every access, so botocore never holds
   its own copy and never applies its 15-minute `RefreshableCredentials` window (which would refresh on every call
-  with 900 s credentials);
+  with short-lived credentials);
 - a `needs-retry.s3` handler: on a 403 `AccessDenied` it calls `Provider.refresh()` once per request and retries with
   zero delay (the retry is re-signed with the new key). A failed refresh, or a second 403, surfaces the original error.
 

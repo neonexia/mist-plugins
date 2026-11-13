@@ -34,7 +34,7 @@ def test_spec_hash_is_recorded():
 def test_every_route_is_an_operation():
     from mist._generated.operations import OPERATIONS, Operation
 
-    assert len(OPERATIONS) == 31
+    assert len(OPERATIONS) == 33
     quota = OPERATIONS["set_quota"]
     assert dataclasses.is_dataclass(quota)
     assert quota == Operation("set_quota", "PUT", "/mist/v1/buckets/{name}/quota", ("name",), (), True, quota.statuses)

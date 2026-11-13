@@ -97,7 +97,8 @@ def test_every_operation_has_a_method():
             template = op.path.split("{")[0]
             if op.method == r.method and r.url.path.startswith(template) and _matches(op, r.url.path):
                 seen.add(op.id)
-    assert seen == set(OPERATIONS) - {"health"}
+    # health, discovery and sts have no client method: they are open endpoints and an AWS STS form (use an AWS SDK).
+    assert seen == set(OPERATIONS) - {"health", "discovery", "sts"}
 
 
 def _matches(op, path):

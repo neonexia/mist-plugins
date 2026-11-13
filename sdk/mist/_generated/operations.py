@@ -15,7 +15,7 @@ class Operation:
     statuses: Tuple[int, ...]
 
 
-SPEC_SHA256 = "49eb9aedf066ac69abc5342feb5bd07b1a2227e3b05dc2f81f61d99c94bd4838"
+SPEC_SHA256 = "11dcd79f88c301987673f078af4ff2c0b5d4408742d97e91efdd2e8f794ca6fb"
 
 OPERATIONS: Dict[str, Operation] = {
     "create_bucket": Operation(
@@ -107,6 +107,15 @@ OPERATIONS: Dict[str, Operation] = {
         query_params=(),
         has_body=False,
         statuses=(200, 403, 404, 409),
+    ),
+    "discovery": Operation(
+        id="discovery",
+        method="GET",
+        path="/mist/v1/discovery",
+        path_params=(),
+        query_params=(),
+        has_body=False,
+        statuses=(200,),
     ),
     "feed": Operation(
         id="feed",
@@ -287,6 +296,15 @@ OPERATIONS: Dict[str, Operation] = {
         query_params=(),
         has_body=True,
         statuses=(200, 400, 403, 404),
+    ),
+    "sts": Operation(
+        id="sts",
+        method="POST",
+        path="/mist/v1/sts",
+        path_params=(),
+        query_params=(),
+        has_body=False,
+        statuses=(200,),
     ),
     "whoami": Operation(
         id="whoami",

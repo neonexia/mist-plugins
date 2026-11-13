@@ -57,7 +57,7 @@ print(g["id"])
 - `list_grants` with no arguments: the grants made **to you**.
 - `list_grants(bucket="my-bucket")`: every grant on a bucket you own.
 - `get_bucket` shows the bucket's grants too.
-- `delete_grant(id=...)` revokes. Credentials already minted keep working until they expire (at most 15 minutes).
+- `delete_grant(id=...)` revokes. Credentials already minted keep working until they expire (1 hour by default, the cluster's `sts.session_secs`).
 
 ## Use access someone gave you
 

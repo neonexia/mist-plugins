@@ -26,7 +26,7 @@ m = mist.Client(
 
 ## Identity
 
-The SDK exchanges your identity for 15-minute S3 credentials and re-mints them before they expire. It looks in one
+The SDK exchanges your identity for 1-hour S3 credentials and re-mints them before they expire. It looks in one
 place on its own: the token file named by `MIST_IDENTITY_TOKEN_FILE`, else `AWS_WEB_IDENTITY_TOKEN_FILE` (re-read on
 every mint, so a token your platform rotates just works). Anything else you pass:
 

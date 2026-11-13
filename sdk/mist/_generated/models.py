@@ -83,6 +83,8 @@ class Versioning(TypedDict):
 class Bucket(TypedDict):
     name: str
     owner: Optional[Principal]
+    contact: str
+    team: bool
     grants: List[Grant]
     versioning: Optional[Versioning]
     expiry: Optional[List[ExpiryRule]]
@@ -227,6 +229,13 @@ class DeliveryList(TypedDict):
     failing_since: Optional[str]
     expired_batches: int
     deliveries: List[DeliveryRecord]
+
+
+class Discovery(TypedDict):
+    version: str
+    sts: str
+    api: str
+    s3: str
 
 
 class RightSourceGrant(TypedDict):

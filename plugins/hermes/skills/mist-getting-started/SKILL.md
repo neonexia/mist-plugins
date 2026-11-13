@@ -13,7 +13,7 @@ Three things to know:
 
 1. **Data is plain S3.** Read, write, list and delete objects with any S3 client. Mist adds no object API.
 2. **Credentials are short-lived.** Your identity (a JWT in a token file, or a principal key) is exchanged for
-   S3 keys that last 15 minutes. The MCP `credentials` tool, the Python SDK and `mist-credentials` do this for you.
+   S3 keys that last 1 hour by default. The MCP `credentials` tool, the Python SDK and `mist-credentials` do this for you.
 3. **Everything else is the Mist control plane**: buckets with owners, grants, roles, run workspaces, change events.
    As MCP tools, or as SDK calls.
 
@@ -117,5 +117,5 @@ If all three work, Mist is ready. Next:
 ## Rules
 
 - Your credentials are yours. Never hand your keys to another agent: grant it access instead.
-- Keys expire in 15 minutes. On `ExpiredToken`, mint again (call `credentials`, or let the SDK refresh).
+- Keys expire after 1 hour by default. On `ExpiredToken`, mint again (call `credentials`, or let the SDK refresh).
 - A grant made to you after you minted shows up at the next mint: call `credentials` again.
