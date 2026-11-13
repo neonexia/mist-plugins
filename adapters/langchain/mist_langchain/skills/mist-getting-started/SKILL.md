@@ -84,7 +84,7 @@ AWS CLI without copying keys: install the SDK (`pip install "mist-sdk @ git+http
 and add a profile that runs `mist-credentials`:
 
 ```ini
-# ~/.aws/config
+# your AWS config file
 [profile mist]
 credential_process = mist-credentials
 region = us-east-1

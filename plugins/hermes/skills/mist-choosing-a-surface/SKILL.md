@@ -84,7 +84,7 @@ They only need credentials and the endpoint. The cleanest way is an AWS profile 
 (installed with the SDK):
 
 ```ini
-# ~/.aws/config
+# your AWS config file
 [profile mist]
 credential_process = mist-credentials
 region = us-east-1
