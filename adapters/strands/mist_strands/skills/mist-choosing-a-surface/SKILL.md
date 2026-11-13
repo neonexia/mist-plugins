@@ -34,6 +34,8 @@ AWS_REGION=us-east-1 AWS_ENDPOINT_URL_S3=<s3_endpoint> \
 ```
 
 Add `AWS_CA_BUNDLE=<path>` when the cluster uses a private CA (the `env` object includes it when configured).
+For more than a command or two, or if a copied token fails with `invalid token`, use the self-minting AWS profile
+in `mist-getting-started` (step 3) instead of copying keys.
 
 ## The Python SDK (`mist-sdk`)
 

@@ -83,17 +83,22 @@ s3.put_object(Bucket="my-agent-data", Key="hello.txt", Body=b"hello")
 print(s3.get_object(Bucket="my-agent-data", Key="hello.txt")["Body"].read())
 ```
 
-AWS CLI without copying keys: install the SDK (`pip install "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirectory=sdk"`)
-and add a profile that runs `mist-credentials`:
+**AWS CLI without copying keys (recommended for many commands).** The session token is over 1,000 characters and
+easy to copy wrongly (`InvalidRequest: invalid token`). With [uv](https://docs.astral.sh/uv/) installed, write an AWS
+config file that mints by itself through `mist-credentials`. It holds no secret:
 
-```ini
-# your AWS config file
+```sh
+cat > mist-aws.config <<EOF
 [profile mist]
-credential_process = mist-credentials
 region = us-east-1
+endpoint_url = $MIST_S3_ENDPOINT
+credential_process = uvx --from "git+https://github.com/neonexia/mist-plugins#subdirectory=sdk" mist-credentials
+EOF
+AWS_CONFIG_FILE=mist-aws.config aws --profile mist s3 ls s3://my-agent-data/
 ```
 
-Then `aws --profile mist --endpoint-url "$MIST_S3_ENDPOINT" s3 ls s3://my-agent-data/`.
+With a private CA, add `ca_bundle = $MIST_CA_BUNDLE` to the profile and `--ca-bundle $MIST_CA_BUNDLE` to the
+`credential_process` line. Each command mints fresh keys (about 2-3 s), so they never expire under you.
 
 ## Step 4: verify
 
