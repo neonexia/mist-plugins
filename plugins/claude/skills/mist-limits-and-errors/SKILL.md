@@ -28,7 +28,8 @@ raises botocore `ClientError` for them.
 | `invalid_parent` | A delegation's parent grant does not allow this | Narrow the request; check the parent has `delegate` |
 | `not_readable` | You cannot read the whole folder you subscribe to | Subscribe to a folder you can read |
 | `reserved_bucket` | The name is kept by Mist | Use another bucket name |
-| `create_not_permitted` | You may not create buckets on this cluster | Ask an admin, or use a bucket shared with you |
+| `create_not_permitted` | No create permission covers this bucket name (an admin gives them, often per name pattern) | Use a name your permission covers, ask the user, or use a bucket shared with you |
+| `bucket_not_empty` | `delete_bucket` on a bucket with objects | Delete the objects over S3 first |
 | `run_id_taken` | A different workspace has this `run_id` | Choose another `run_id` |
 | `subscription_limit` | Too many subscriptions | Delete unused ones |
 
