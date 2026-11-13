@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mist-sdk"
+version = "0.1.0"
+description = "Python SDK for Mist: S3 access, STS credentials and the typed Mist HTTP API."
+requires-python = ">=3.10"
+dependencies = [
+    "boto3>=1.36",
+    "httpx>=0.27,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pyyaml"]
+
+[project.scripts]
+mist-credentials = "mist.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mist"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit"]
