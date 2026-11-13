@@ -32,7 +32,7 @@ Mist is an S3-compatible object store for agents. You act as your own identity (
 plain S3; these tools are the control plane only. They never read or write objects.
 
 - Who am I, what can I reach: `whoami` (identity, buckets you own, rights from grants and roles, roles you may assume).
-- Read or write data: call `credentials` for 15-minute S3 keys and the S3 endpoint, then use any S3 client
+- Read or write data: call `credentials` for S3 keys (1 hour by default) and the S3 endpoint, then use any S3 client
   (the AWS CLI with the returned environment variables, boto3, or the harness's S3 tools). Path-style addressing,
   region us-east-1. Call `credentials` again when they expire or after you get a new grant.
 - Your own storage: `create_bucket` (you become its owner). For one task's scratch space use `create_workspace`
@@ -186,7 +186,7 @@ def build_server(config: Optional[Config] = None) -> MCPServer:
     async def credentials(
         role: Annotated[Optional[str], Field(description="Mint with this role's rights added (see whoami).")] = None,
     ) -> dict:
-        """Temporary S3 credentials (15 minutes) for your identity, with the S3 endpoint. Use them with any S3
+        """Temporary S3 credentials (1 hour by default) for your identity, with the S3 endpoint. Use them with any S3
         client: path-style addressing, region us-east-1. `env` holds the same values as AWS environment variables
         for the AWS CLI. Call again after they expire or after a new grant. Treat the secret as a secret: do not
         print it or write it to files others can read."""
