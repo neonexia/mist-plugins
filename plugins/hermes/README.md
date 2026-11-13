@@ -37,6 +37,9 @@ hermes chat -q "Who am I in Mist? Use the mist whoami tool."
 
 The skills appear as `mist:mist-getting-started` and so on.
 
+Hermes runs chats through a background gateway, which starts the MCP server with the environment it had when it
+started. After you change a `MIST_*` variable (another token file, another cluster), run `hermes gateway restart`.
+
 Update: `hermes plugins update mist`. Remove: `hermes plugins remove mist`.
 
 ## What is in it
