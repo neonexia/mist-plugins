@@ -79,10 +79,9 @@ def boto3_session(provider: Provider) -> boto3.Session:
     return boto3.Session(botocore_session=bs, region_name=REGION)
 
 
-def s3_client_kwargs(s3_endpoint: Optional[str], ca_bundle: Optional[str]) -> Dict[str, Any]:
-    endpoint = s3_endpoint or os.environ.get("MIST_S3_ENDPOINT")
-    if not endpoint:
-        raise ValueError("no S3 endpoint: pass s3_endpoint= to Client or set MIST_S3_ENDPOINT")
+def s3_client_kwargs(s3_endpoint: Optional[str], ca_bundle: Optional[str], endpoint: str) -> Dict[str, Any]:
+    """S3 is served on the Mist address (`endpoint`) unless `s3_endpoint` or MIST_S3_ENDPOINT names another."""
+    endpoint = s3_endpoint or os.environ.get("MIST_S3_ENDPOINT") or endpoint
     config = Config(
         retries={"mode": "standard", "max_attempts": 8},
         s3={"addressing_style": "path"},

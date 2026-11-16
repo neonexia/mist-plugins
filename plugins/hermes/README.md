@@ -12,8 +12,7 @@ teach the agent how to use Mist. Data goes over plain S3 with the keys from the 
    filtered environment; the plugin forwards exactly these:
 
 ```sh
-MIST_ENDPOINT=https://mist.example.com:9200        # the gateway
-MIST_S3_ENDPOINT=https://mist.example.com:9000     # S3
+MIST_ENDPOINT=https://mist.example.com        # the one Mist address: S3, STS and the API
 MIST_IDENTITY_TOKEN_FILE=/home/me/.mist/token.jwt  # your agent's identity token (JWT)
 # or a principal key instead of the token file:
 # MIST_PRINCIPAL_KEY_ID=...

@@ -57,7 +57,7 @@ def test_endpoint_from_the_environment(token_file, monkeypatch):
     monkeypatch.setenv("MIST_ENDPOINT", ENDPOINT + "/ignored/path")
     sts = FakeSts(900)
     assert run(["--token-file", token_file], sts) == 0
-    assert str(sts.requests[0].url) == ENDPOINT + "/"
+    assert str(sts.requests[0].url) == ENDPOINT + "/mist/v1/sts"
 
 
 def test_principal_key_from_the_two_variables(monkeypatch):

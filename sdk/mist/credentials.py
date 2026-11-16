@@ -38,6 +38,10 @@ STS_REGION = "us-east-1"
 _FORM = "application/x-www-form-urlencoded; charset=utf-8"
 
 
+# The one address serves STS here (the gateway route); S3 and the Mist API share the same host.
+STS_PATH = "/mist/v1/sts"
+
+
 @dataclass(frozen=True)
 class Credentials:
     """Temporary S3 credentials. `expiration` is timezone-aware UTC."""
@@ -75,7 +79,7 @@ class Provider:
         timings: Timings,
         session_name: str = "mist-sdk",
     ) -> None:
-        self._url = endpoint.rstrip("/") + "/"
+        self._url = endpoint.rstrip("/") + STS_PATH
         url = httpx.URL(self._url)
         # httpx's netloc is host and port only (IPv6 kept in brackets): userinfo never reaches an error message.
         self._origin = f"{url.scheme}://{url.netloc.decode('ascii')}"

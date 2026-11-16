@@ -13,8 +13,7 @@ the `credentials` tool.
    MCP server:
 
 ```sh
-export MIST_ENDPOINT=https://mist.example.com:9200        # the gateway
-export MIST_S3_ENDPOINT=https://mist.example.com:9000     # S3
+export MIST_ENDPOINT=https://mist.example.com        # the one Mist address: S3, STS and the API
 export MIST_IDENTITY_TOKEN_FILE=$HOME/.mist/token.jwt     # your agent's identity token (JWT)
 # or a principal key instead of the token file:
 # export MIST_PRINCIPAL_KEY_ID=...  MIST_PRINCIPAL_KEY_SECRET=...

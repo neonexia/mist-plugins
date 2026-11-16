@@ -29,8 +29,8 @@ The adapters build a `mist.Client` from these variables unless you pass `client=
 
 | Variable | What |
 |---|---|
-| `MIST_ENDPOINT` | The gateway (STS and the Mist HTTP API), e.g. `https://mist.example.com:9200` |
-| `MIST_S3_ENDPOINT` | The S3 endpoint, e.g. `https://mist.example.com:9000` |
+| `MIST_ENDPOINT` | The one Mist address: S3, STS and the Mist HTTP API, e.g. `https://mist.example.com` |
+| `MIST_S3_ENDPOINT` | Only if S3 is on a different address than `MIST_ENDPOINT`, e.g. `https://s3.example.com` |
 | `MIST_IDENTITY_TOKEN_FILE` | A file holding the agent's identity token (JWT) |
 | `MIST_CA_BUNDLE` | Only for a private CA |
 

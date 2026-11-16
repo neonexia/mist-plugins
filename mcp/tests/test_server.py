@@ -51,7 +51,7 @@ class Gateway:
                     "method": self.command, "path": url.path, "query": parse_qs(url.query),
                     "body": body, "auth": self.headers.get("Authorization"),
                 })
-                if self.command == "POST" and url.path == "/":
+                if self.command == "POST" and url.path == "/mist/v1/sts":
                     self._send(200, STS_OK.encode(), "text/xml")
                     return
                 status, reply = gw.routes.get((self.command, url.path), (200, {}))
@@ -71,7 +71,7 @@ class Gateway:
         threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
 
     def mist_calls(self):
-        return [r for r in self.requests if r["path"] != "/"]
+        return [r for r in self.requests if r["path"] != "/mist/v1/sts"]
 
 
 @pytest.fixture
@@ -159,14 +159,14 @@ async def test_credentials_mint_over_sts(env, gateway):
     assert reply["s3_endpoint"] == "http://127.0.0.1:9"
     assert reply["env"]["AWS_SESSION_TOKEN"] == "STFAKE"
     assert reply["env"]["AWS_ENDPOINT_URL_S3"] == "http://127.0.0.1:9"
-    sts = [r for r in gateway.requests if r["path"] == "/"]
+    sts = [r for r in gateway.requests if r["path"] == "/mist/v1/sts"]
     assert b"AssumeRoleWithWebIdentity" in sts[0]["body"]
 
 
 async def test_credentials_with_a_role_send_the_role_arn(env, gateway):
     async with Client(build_server(Config(env))) as c:
         body(await c.call_tool("credentials", {"role": "analyst"}))
-    sts = [r for r in gateway.requests if r["path"] == "/"]
+    sts = [r for r in gateway.requests if r["path"] == "/mist/v1/sts"]
     assert b"role%2Fanalyst" in sts[0]["body"]
 
 

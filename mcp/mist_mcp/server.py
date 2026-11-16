@@ -4,7 +4,7 @@ Mist's control plane as tools: identity, buckets, grants, roles, change events a
 `credentials` (minted S3 keys) and `guide` (the teaching text). No object tools: data goes over S3.
 
 Configuration comes from the environment, as for every Mist pack:
-`MIST_ENDPOINT` (the gateway), `MIST_S3_ENDPOINT`, `MIST_CA_BUNDLE` (only for a private CA), and the identity:
+`MIST_ENDPOINT` (the one Mist address), `MIST_S3_ENDPOINT`, `MIST_CA_BUNDLE` (only for a private CA), and the identity:
 `MIST_IDENTITY_TOKEN_FILE` (a file holding a JWT), or `MIST_PRINCIPAL_KEY_ID` with `MIST_PRINCIPAL_KEY_SECRET`.
 """
 from __future__ import annotations
@@ -95,7 +95,8 @@ class Config:
 
     @property
     def s3_endpoint(self) -> Optional[str]:
-        return self._env.get("MIST_S3_ENDPOINT") or None
+        # S3 is on the one Mist address unless MIST_S3_ENDPOINT names another.
+        return self._env.get("MIST_S3_ENDPOINT") or self._env.get("MIST_ENDPOINT") or None
 
     @property
     def ca_bundle(self) -> Optional[str]:
@@ -106,7 +107,7 @@ class Config:
             if role not in self._clients:
                 endpoint = self._env.get("MIST_ENDPOINT")
                 if not endpoint:
-                    raise _not_configured("no endpoint: set MIST_ENDPOINT to the Mist gateway, e.g. https://mist.example.com:9200")
+                    raise _not_configured("no endpoint: set MIST_ENDPOINT to the Mist address, e.g. https://mist.example.com")
                 try:
                     self._clients[role] = mist.Client(
                         endpoint,

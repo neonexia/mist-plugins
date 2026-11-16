@@ -10,19 +10,20 @@ pip install "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirector
 
 (Not on PyPI yet. The PyPI name `mist` belongs to an unrelated project.)
 
-## Two addresses
+## One address
 
-Mist listens on two addresses: the **gateway** (STS and the Mist HTTP API under `/mist/v1`) and the **S3** endpoint.
+Set `MIST_ENDPOINT` to the one Mist address. S3, STS (`/mist/v1/sts`) and the Mist HTTP API (`/mist/v1`) all use it.
 
 ```python
 import mist
 
 m = mist.Client(
-    endpoint="https://mist.example.com:9200",      # or MIST_ENDPOINT
-    s3_endpoint="https://mist.example.com:9000",   # or MIST_S3_ENDPOINT
+    endpoint="https://mist.example.com",           # or MIST_ENDPOINT
     ca_bundle="/etc/mist/ca.crt",                  # only for a private CA
 )
 ```
+
+If S3 is served on a different address, also pass `s3_endpoint=` (or set `MIST_S3_ENDPOINT`).
 
 ## Identity
 
@@ -166,15 +167,15 @@ An AWS `credential_process` helper, installed with the package. It mints once, p
 ```ini
 # ~/.aws/config
 [profile mist]
-credential_process = mist-credentials --endpoint https://mist.example.com:9200 --ca-bundle /etc/mist/ca.crt
+credential_process = mist-credentials --endpoint https://mist.example.com --ca-bundle /etc/mist/ca.crt
 
 # narrowed: read datasets/shared/, write results/run-1/
 [profile mist-run-1]
-credential_process = mist-credentials --endpoint https://mist.example.com:9200 --read datasets/shared/ --write results/run-1/
+credential_process = mist-credentials --endpoint https://mist.example.com --read datasets/shared/ --write results/run-1/
 ```
 
 ```
-aws --profile mist --endpoint-url https://mist.example.com:9000 s3api list-objects-v2 --bucket results
+aws --profile mist --endpoint-url https://mist.example.com s3api list-objects-v2 --bucket results
 ```
 
 Identity, in order: `--token-file` when given; else `MIST_PRINCIPAL_KEY_ID` and `MIST_PRINCIPAL_KEY_SECRET` (both, or

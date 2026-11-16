@@ -25,8 +25,8 @@ one shared core and a thin pack per harness. Keep it simple: V1.
 
 ## Configuration (every pack)
 
-- `MIST_ENDPOINT`: the gateway (STS and the Mist HTTP API), for example `https://mist.example.com:9200`.
-- `MIST_S3_ENDPOINT`: the S3 endpoint, for example `https://mist.example.com:9000`.
+- `MIST_ENDPOINT`: the one Mist address (S3, STS at `/mist/v1/sts`, and the Mist HTTP API), for example `https://mist.example.com`.
+- `MIST_S3_ENDPOINT`: only when S3 is on a different address; it defaults to `MIST_ENDPOINT`.
 - `MIST_IDENTITY_TOKEN_FILE`: a file holding the agent's identity token (JWT), or a principal key (`MIST_PRINCIPAL_KEY_ID`, `MIST_PRINCIPAL_KEY_SECRET` if the SDK supports them from the environment).
 - `MIST_CA_BUNDLE`: only for a private CA.
 

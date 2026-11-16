@@ -27,7 +27,7 @@ class Gateway:
 
     def __call__(self, request):
         self.requests.append(request)
-        if request.url.path == "/":
+        if request.url.path == "/mist/v1/sts":
             return httpx.Response(200, text=STS_OK)
         if request.url.path.endswith("/events"):
             return httpx.Response(200, json={"events": [], "next_cursor": "c"})
@@ -48,7 +48,7 @@ class Gateway:
         return parse_qs(self.last.url.query.decode())
 
     def mints(self):
-        return [parse_qs(r.content.decode()) for r in self.requests if r.url.path == "/"]
+        return [parse_qs(r.content.decode()) for r in self.requests if r.url.path == "/mist/v1/sts"]
 
 
 GRANTEE = {"principal": {"issuer": "i", "id": "a"}}

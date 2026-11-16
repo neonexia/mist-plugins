@@ -19,7 +19,7 @@ change events.
 | Any MCP client | `uvx --from "git+https://github.com/neonexia/mist-plugins#subdirectory=mcp" mist-mcp` | [mcp](mcp/README.md) |
 | Python code | `pip install "mist-sdk @ git+https://github.com/neonexia/mist-plugins#subdirectory=sdk"` | [sdk](sdk/README.md) |
 
-Every pack reads the same settings from the environment: `MIST_ENDPOINT` (the gateway), `MIST_S3_ENDPOINT`,
+Every pack reads the same settings from the environment: `MIST_ENDPOINT` (the one Mist address), `MIST_S3_ENDPOINT` (only if S3 is elsewhere),
 `MIST_IDENTITY_TOKEN_FILE` (the agent's identity token) or `MIST_PRINCIPAL_KEY_ID` and `MIST_PRINCIPAL_KEY_SECRET`,
 and `MIST_CA_BUNDLE` for a private CA. The packs that start the MCP server need [uv](https://docs.astral.sh/uv/).
 

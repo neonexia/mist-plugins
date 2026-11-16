@@ -34,7 +34,7 @@ class Feed:
         self.timeouts = []
 
     def __call__(self, request):
-        if request.url.path == "/":
+        if request.url.path == "/mist/v1/sts":
             return httpx.Response(200, text=STS_OK)
         self.reads.append(request)
         self.timeouts.append(request.extensions["timeout"])

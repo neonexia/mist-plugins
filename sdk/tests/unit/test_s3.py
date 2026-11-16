@@ -122,13 +122,11 @@ def test_s3_endpoint_comes_from_the_environment(s3server, monkeypatch):
     assert m.s3().meta.endpoint_url == srv.url
 
 
-def test_missing_s3_endpoint_names_both_ways_to_set_it(monkeypatch):
+def test_s3_defaults_to_the_one_mist_address(monkeypatch):
     monkeypatch.delenv("MIST_S3_ENDPOINT", raising=False)
     http = httpx.Client(transport=httpx.MockTransport(Sts()))
-    m = Client("https://gw:9200", identity=Token("tok"), http_client=http)
-    with pytest.raises(ValueError) as e:
-        m.s3()
-    assert "s3_endpoint" in str(e.value) and "MIST_S3_ENDPOINT" in str(e.value)
+    m = Client("https://mist.example.com", identity=Token("tok"), http_client=http)
+    assert m.s3().meta.endpoint_url == "https://mist.example.com"
 
 
 def test_ca_bundle_becomes_verify(s3server):

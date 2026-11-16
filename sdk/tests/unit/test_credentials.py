@@ -82,7 +82,7 @@ def test_web_identity_mint_sends_the_form():
     assert creds.expiration.tzinfo is not None
     request = sts.requests[0]
     assert request.method == "POST"
-    assert str(request.url) == ENDPOINT + "/"
+    assert str(request.url) == ENDPOINT + "/mist/v1/sts"
     assert request.headers["content-type"].startswith("application/x-www-form-urlencoded")
     assert sts.form(0) == {
         "Action": "AssumeRoleWithWebIdentity",

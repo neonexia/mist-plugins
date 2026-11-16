@@ -23,8 +23,8 @@ Every Mist plugin reads the same environment variables:
 
 | Variable | What |
 |---|---|
-| `MIST_ENDPOINT` | The gateway (STS and the Mist HTTP API), e.g. `https://mist.example.com:9200` |
-| `MIST_S3_ENDPOINT` | The S3 endpoint, e.g. `https://mist.example.com:9000` |
+| `MIST_ENDPOINT` | The one Mist address: S3, STS and the Mist HTTP API, e.g. `https://mist.example.com` |
+| `MIST_S3_ENDPOINT` | Only if S3 is on a different address than `MIST_ENDPOINT`, e.g. `https://s3.example.com` |
 | `MIST_IDENTITY_TOKEN_FILE` | A file holding your identity token (JWT). Re-read on every mint, so a rotated token just works |
 | `MIST_PRINCIPAL_KEY_ID`, `MIST_PRINCIPAL_KEY_SECRET` | Instead of a token: a principal key from your Mist admin |
 | `MIST_CA_BUNDLE` | Only when the cluster uses a private CA |
@@ -67,7 +67,7 @@ MCP: call `credentials`. It returns `access_key_id`, `secret_access_key`, `sessi
 
 ```sh
 export AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=... AWS_SESSION_TOKEN=... AWS_REGION=us-east-1
-export AWS_ENDPOINT_URL_S3="$MIST_S3_ENDPOINT"     # and AWS_CA_BUNDLE="$MIST_CA_BUNDLE" for a private CA
+export AWS_ENDPOINT_URL_S3="${MIST_S3_ENDPOINT:-$MIST_ENDPOINT}"     # and AWS_CA_BUNDLE="$MIST_CA_BUNDLE" for a private CA
 aws s3api put-object --bucket my-agent-data --key hello.txt --body ./hello.txt
 aws s3api list-objects-v2 --bucket my-agent-data
 ```
@@ -91,7 +91,7 @@ config file that mints by itself through `mist-credentials`. It holds no secret:
 cat > mist-aws.config <<EOF
 [profile mist]
 region = us-east-1
-endpoint_url = $MIST_S3_ENDPOINT
+endpoint_url = ${MIST_S3_ENDPOINT:-$MIST_ENDPOINT}
 credential_process = uvx --from "git+https://github.com/neonexia/mist-plugins#subdirectory=sdk" mist-credentials
 EOF
 AWS_CONFIG_FILE=mist-aws.config aws --profile mist s3 ls s3://my-agent-data/

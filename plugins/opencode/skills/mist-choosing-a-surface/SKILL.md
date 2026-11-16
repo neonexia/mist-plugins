@@ -95,7 +95,7 @@ s3 =
 ```
 
 ```sh
-aws --profile mist --endpoint-url "$MIST_S3_ENDPOINT" s3 ls s3://my-bucket/
+aws --profile mist --endpoint-url "${MIST_S3_ENDPOINT:-$MIST_ENDPOINT}" s3 ls s3://my-bucket/
 ```
 
 `mist-credentials --read my-bucket/in/ --write my-bucket/out/` mints narrowed keys for a profile used by a tool you

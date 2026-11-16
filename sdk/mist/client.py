@@ -215,7 +215,7 @@ class Client:
 
     def s3_client_kwargs(self) -> dict:
         """The settings for building an S3 client from `boto3_session()`: endpoint, region, verify and config."""
-        return _s3_client_kwargs(self.s3_endpoint, self.ca_bundle)
+        return _s3_client_kwargs(self.s3_endpoint, self.ca_bundle, self.endpoint)
 
     def s3(self, **client_kwargs):
         """A stock boto3 S3 client over the refreshing credentials; `client_kwargs` override the defaults."""
