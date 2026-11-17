@@ -23,8 +23,11 @@ class Buckets:
     def __init__(self, api: Api) -> None:
         self._api = api
 
-    def create(self, name: str, expiry: Optional[list] = None) -> models.NewBucket:
-        return self._api.call("create_bucket", body=_body(name=name, expiry=expiry))  # type: ignore[return-value]
+    def create(self, name: str, expiry: Optional[list] = None, encryption: Optional[str] = None) -> models.NewBucket:
+        """`encryption`: `"sse-s3"` encrypts new objects at rest (the cluster needs a key service), `"none"` does
+        not; left out, the cluster's `bucket.default_encryption` decides (`none` unless the install changed it)."""
+        body = _body(name=name, expiry=expiry, encryption=encryption)
+        return self._api.call("create_bucket", body=body)  # type: ignore[return-value]
 
     def get(self, name: str) -> models.Bucket:
         return self._api.call("get_bucket", path={"name": name})  # type: ignore[return-value]
@@ -35,6 +38,11 @@ class Buckets:
     def set_versioning(self, name: str, status: str, keep_versions: Optional[int] = None) -> models.Versioning:
         body = _body(status=status, keep_versions=keep_versions)
         return self._api.call("set_versioning", path={"name": name}, body=body)  # type: ignore[return-value]
+
+    def set_encryption(self, name: str, encryption: str) -> models.BucketEncryption:
+        """`"sse-s3"` or `"none"`. Applies to objects written afterwards; existing objects keep how they were stored."""
+        body = {"encryption": encryption}
+        return self._api.call("set_encryption", path={"name": name}, body=body)  # type: ignore[return-value]
 
     def set_quota(self, name: str, bytes: Optional[int]) -> models.QuotaSetting:
         """`bytes=None` means unlimited and is sent as `{"bytes": null}`."""

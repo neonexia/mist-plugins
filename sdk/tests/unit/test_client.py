@@ -63,6 +63,7 @@ def test_every_operation_has_a_method():
         lambda: c.buckets.get("b"),
         lambda: c.buckets.delete("b"),
         lambda: c.buckets.set_versioning("b", "enabled"),
+        lambda: c.buckets.set_encryption("b", "sse-s3"),
         lambda: c.buckets.set_quota("b", 1),
         lambda: c.buckets.set_expiry("b", "p/", 7),
         lambda: c.buckets.remove_expiry("b", "p/"),
@@ -113,6 +114,14 @@ def test_buckets_create_sends_the_body():
     assert g.body() == {"name": "b"}
     c.buckets.create("b", expiry=[{"prefix": "", "days": 7}])
     assert g.body() == {"name": "b", "expiry": [{"prefix": "", "days": 7}]}
+    c.buckets.create("b", encryption="sse-s3")
+    assert g.body() == {"name": "b", "encryption": "sse-s3"}
+
+
+def test_set_encryption_sends_the_word():
+    g = Gateway()
+    g.client().buckets.set_encryption("b", "none")
+    assert (g.last.method, g.last.url.path, g.body()) == ("PUT", "/mist/v1/buckets/b/encryption", {"encryption": "none"})
 
 
 def test_set_quota_none_sends_null():

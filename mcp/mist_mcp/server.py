@@ -228,13 +228,18 @@ def build_server(config: Optional[Config] = None) -> MCPServer:
             Optional[List[Dict[str, Any]]],
             Field(description='Optional starting expiry rules: [{"prefix": "tmp/", "days": 7}].'),
         ] = None,
+        encryption: Annotated[
+            Optional[str],
+            Field(description='"sse-s3" to encrypt new objects at rest (needs a cluster with a key service), "none" not to. '
+                  "Left out: the cluster's default, which is none unless the admin changed it."),
+        ] = None,
     ) -> dict:
         """Create a bucket you own. As owner you may share it (grants, roles), and change its settings."""
-        return await run(lambda: config.client().buckets.create(name, expiry=expiry))
+        return await run(lambda: config.client().buckets.create(name, expiry=expiry, encryption=encryption))
 
     @server.tool(annotations=READ)
     async def get_bucket(name: str) -> dict:
-        """A bucket's owner, grants (all of them if you own it, else yours), versioning, expiry rules and quota."""
+        """A bucket's owner, grants (all of them if you own it, else yours), versioning, encryption, expiry rules and quota."""
         return await run(lambda: config.client().buckets.get(name))
 
     @server.tool(annotations=DELETE)
