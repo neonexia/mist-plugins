@@ -20,6 +20,10 @@ class ActorMatchSourceIdentityPrefix(TypedDict):
 ActorMatch = Union[ActorMatchExact, ActorMatchSourceIdentityPrefix]
 
 
+# A bucket's default encryption at rest. `sse-s3`: each new object is encrypted with its own data key, wrapped by the cluster's key service (S3's SSE-S3, `AES256`). `none`: new objects are stored as written.
+Encryption = Literal['sse-s3', 'none']
+
+
 class ExpiryRule(TypedDict):
     """Objects in the folder are deleted some time after they are `days` days old."""
 
@@ -87,8 +91,13 @@ class Bucket(TypedDict):
     team: bool
     grants: List[Grant]
     versioning: Optional[Versioning]
+    encryption: Optional[Encryption]
     expiry: Optional[List[ExpiryRule]]
     quota: Quota
+
+
+class BucketEncryption(TypedDict):
+    encryption: Encryption
 
 
 class BucketEvents(TypedDict):
@@ -101,6 +110,7 @@ class _CreateBucketBodyRequired(TypedDict):
 
 class CreateBucketBody(_CreateBucketBodyRequired, total=False):
     expiry: List[ExpiryRule]
+    encryption: Encryption
 
 
 class _CreateGrantBodyRequired(TypedDict):
@@ -315,6 +325,7 @@ class Health(TypedDict):
 class NewBucket(TypedDict):
     name: str
     owner: Principal
+    encryption: Encryption
 
 
 class QuotaSetting(TypedDict):

@@ -270,6 +270,15 @@ OPERATIONS: Dict[str, Operation] = {
         has_body=True,
         statuses=(200, 400, 403, 404, 503),
     ),
+    "set_encryption": Operation(
+        id="set_encryption",
+        method="PUT",
+        path="/mist/v1/buckets/{name}/encryption",
+        path_params=('name',),
+        query_params=(),
+        has_body=True,
+        statuses=(200, 400, 403, 404),
+    ),
     "set_expiry": Operation(
         id="set_expiry",
         method="PUT",

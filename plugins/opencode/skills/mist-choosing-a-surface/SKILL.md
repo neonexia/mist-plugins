@@ -13,7 +13,7 @@ Mist has one data path and one control plane. Pick by what you are doing.
 | Read, write, list, delete objects | **S3**: the AWS CLI, boto3 (`m.s3()` in the SDK), or any S3 tool. Never MCP |
 | Get S3 credentials | MCP `credentials` (interactive), the SDK (code), `mist-credentials` (AWS CLI profile) |
 | Buckets, grants, roles, workspaces, events | MCP tools (interactive), or the SDK in code |
-| Settings MCP does not have: versioning, quota, expiry rules, events switch | The SDK (`m.buckets.set_versioning`, `set_quota`, `set_expiry`, `set_events`) |
+| Settings MCP does not have: versioning, encryption, quota, expiry rules, events switch | The SDK (`m.buckets.set_versioning`, `set_encryption`, `set_quota`, `set_expiry`, `set_events`) |
 | A loop that runs for a long time (event consumer, pipeline) | The SDK: it refreshes credentials and reconnects for you |
 
 Rule of thumb: **MCP for a few control-plane steps in a conversation; the SDK as soon as you write a program.**
